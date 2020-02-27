@@ -1,0 +1,83 @@
+Given a string consisting of lowercase letters only, find the typographically smallest string not present as a substring in it.
+
+Given two string S1 and S2. S1 is considered typographically smaller than S2 if either:
+
+
+Input:
+
+The first line of input contains the string S.
+
+Output:
+
+Answer as stated above.
+
+Constraints:
+
+
+SAMPLE INPUT 
+saurabh
+SAMPLE OUTPUT 
+c
+Explanation
+The given string saurabh , does not contain c hence answer is c.
+
+#include<bits/stdc++.h>
+#include<iostream>
+using namespace std;
+#define int long long int
+#define ld long double
+#define F first
+#define S second
+#define P pair<int,int>
+#define pb push_back
+
+const int N=100005;
+int dp[N][26];
+vector<string>v;
+
+void give(int n,string s)
+{
+    if(!n)
+    {
+      v.pb(s);
+      return;
+    }
+    for(int i=0;i<26;i++)
+    {
+      give(n-1,s+(char)('a'+i));
+    }
+}
+int32_t main()
+{
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
+  cout.tie(NULL);
+  {
+    int i,j,k,n,m,ans=0,cnt=0,sum=0;
+    string s;
+    cin>>s;
+    n=s.size();
+    for(auto x: v)
+    {
+      cout<<x<<" ";
+    }
+    for(i=1;i<=n;i++)
+    {
+      map<string,bool>mp;
+      for(j=0;j+i<=n;j++)
+      {
+        mp[s.substr(j,i)]=true;
+      }
+      v.clear();
+      give(i,"");
+      for(auto x : v)
+      {
+        if(mp[x]==0)
+        {
+          std::cout<<x;
+          return 0;
+        }
+      }
+    }
+  }
+}
